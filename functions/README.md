@@ -6,7 +6,7 @@ Synchronises the questions repo of PeerPrep with those in leetcode.
 
 Clone and install firebase tools
 ```
-cd AY2324S1-ASSIGNMENT-6-G37
+cd ay2324s1-assignment-6-g37
 npm install
 ```
 
