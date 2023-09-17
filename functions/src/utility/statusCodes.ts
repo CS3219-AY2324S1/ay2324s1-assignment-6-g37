@@ -1,0 +1,2 @@
+export const CODE_NOT_FOUND = 404
+export const CODE_INTERNAL_SERVER_ERROR = 500
