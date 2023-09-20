@@ -83,7 +83,7 @@ function formatQuestion(leetcodeQuestion: LeetcodeQuestion): Question {
  * @returns The response of the post request from posting the question to the questions repository.
  */
 async function saveQuestion(question: Question) {
-  const url = "http://127.0.0.1:3000/api/questions";
+  const url = "http://127.0.0.1:3001/api/questions";
   return axios.post(url, question);
 }
 
