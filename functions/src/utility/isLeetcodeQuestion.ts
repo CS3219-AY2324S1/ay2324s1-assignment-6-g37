@@ -1,5 +1,6 @@
 import { LeetcodeQuestion } from "../types";
 import { hasKey, isArrayOfType } from ".";
+import { isLeetcodeTopicTag } from "./isLeetcodeTopicTag";
 
 /**
  * Checks that the given input is a Leetcode Question
@@ -11,7 +12,7 @@ export function isLeetcodeQuestion(unknown: unknown): unknown is LeetcodeQuestio
       || typeof unknown['title'] !== 'string') {
     return false;
   } else if (!hasKey(unknown, 'topicTags')
-      || !isArrayOfType(unknown['topicTags'], obj => hasKey(obj, 'name') && typeof obj['name'] === 'string')) {
+      || !isArrayOfType(unknown['topicTags'], isLeetcodeTopicTag)) {
     return false;
   } else if (!hasKey(unknown, 'difficulty')
       || typeof unknown['difficulty'] !== 'string'

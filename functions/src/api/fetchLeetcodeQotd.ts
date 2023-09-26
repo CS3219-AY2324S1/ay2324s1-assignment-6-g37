@@ -6,7 +6,7 @@ import { hasKey, isLeetcodeQuestion } from "../utility";
  * 
  * @returns Question of the day if found, null otherwise.
  */
-export async function fetchQotd() {
+export async function fetchLeetcodeQotd() {
   const url = "https://leetcode.com/graphql";
   const graphQlQuery = "query questionOfToday {\nactiveDailyCodingChallengeQuestion {\nquestion {\ntitle\ndifficulty\ncontent\npaidOnly: isPaidOnly\ntopicTags {\nname\n}\n}\n}\n}";
   const options = {

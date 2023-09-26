@@ -5,10 +5,10 @@
  * @param checkType Predicate to check each element in the array.
  * @returns True if input is an array and each element in the array satisfies the given predicate. 
  */
-export function isArrayOfType(
+export function isArrayOfType<T>(
   array: unknown,
-  checkType: (unknown: unknown) => boolean
-) {
+  checkType: (unknown: unknown) => unknown is T
+): array is T[] {
   if (!Array.isArray(array)) {
     return false;
   }
