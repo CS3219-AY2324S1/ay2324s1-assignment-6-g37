@@ -7,16 +7,16 @@ import { CODE_NOT_FOUND } from "../utility";
  * Updates the existing question if it exists, and adds it to the repo otherwise.
  */
 export const syncQotd = onRequest(async (request, response) => {
-  fetchLeetcodeQotd()
-      .then(async leetcodeQuestion => {
-        if (!leetcodeQuestion) {
-          response.sendStatus(CODE_NOT_FOUND).end();
-          return;
-        } 
-        const question = formatQuestion(leetcodeQuestion);
-        await saveRepoQuestion(question);
-        response.end();
-      }).catch(error => 
-        handleError(error, response)
-      );
+  try {
+    const leetcodeQuestion = await fetchLeetcodeQotd();
+    if (!leetcodeQuestion) {
+      response.sendStatus(CODE_NOT_FOUND).end();
+      return;
+    } 
+    const question = formatQuestion(leetcodeQuestion);
+    await saveRepoQuestion(question);
+    response.end();
+  } catch (error) {
+    handleError(error, response)
+  }
 });
