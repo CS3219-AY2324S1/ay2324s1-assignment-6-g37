@@ -12,6 +12,7 @@ import AddQuestionForm from "./AddQuestionForm";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useUserContext } from "../UserContext";
+import SyncButtonsBar from "./syncQuestions/SyncButtonsBar";
 
 const allCategories = [
   "Arrays",
@@ -175,205 +176,208 @@ const QuestionBank: React.FC = () => {
               </h2>
             </div>
           ) : (
-            <table className={styles.table_container}>
-              <thead>
-                <tr>
-                  <th className={styles.table_header}>Title</th>
-                  <th className={styles.table_header}>Category</th>
-                  <th className={styles.table_header}>Complexity</th>
-                  {currentUser &&
-                    Object.keys(currentUser).length != 0 &&
-                    currentUser.username && (
-                      <th className={styles.table_header}>Actions</th>
-                    )}
-                </tr>
-              </thead>
-              <tbody>
-                {questions.map((question) => (
-                  <React.Fragment key={question._id}>
-                    {updatingQuestionId === question._id ? (
-                      <tr>
-                        <td colSpan={3}>
-                          <div className={styles.update_form}>
-                            <div>
-                              <label className={styles.the_label}>Title</label>
-                              <input
-                                className={styles.input_text}
-                                ref={titleRef}
-                                type="text"
-                                defaultValue={question.title}
-                              />
-                            </div>
-                            <div>
-                              <label className={styles.the_label}>
-                                Description
-                              </label>
-                              <textarea
-                                className={styles.text_area}
-                                ref={descriptionRef}
-                                defaultValue={question.description}
-                              ></textarea>
-                            </div>
-                            <div>
-                              <label className={styles.the_label}>
-                                Category
-                              </label>
+            <>
+              <SyncButtonsBar />
+              <table className={styles.table_container}>
+                <thead>
+                  <tr>
+                    <th className={styles.table_header}>Title</th>
+                    <th className={styles.table_header}>Category</th>
+                    <th className={styles.table_header}>Complexity</th>
+                    {currentUser &&
+                      Object.keys(currentUser).length != 0 &&
+                      currentUser.username && (
+                        <th className={styles.table_header}>Actions</th>
+                      )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {questions.map((question) => (
+                    <React.Fragment key={question._id}>
+                      {updatingQuestionId === question._id ? (
+                        <tr>
+                          <td colSpan={3}>
+                            <div className={styles.update_form}>
                               <div>
-                                {question.categories.map((cat, index) => (
-                                  <span key={index}>
-                                    {cat}
-                                    <button
-                                      className={styles.category_button}
-                                      onClick={() =>
-                                        updateExistingCategoryArray(
-                                          question._id,
-                                          cat,
-                                          "remove"
-                                        )
-                                      }
-                                    >
-                                      X
-                                    </button>
-                                  </span>
-                                ))}
+                                <label className={styles.the_label}>Title</label>
+                                <input
+                                  className={styles.input_text}
+                                  ref={titleRef}
+                                  type="text"
+                                  defaultValue={question.title}
+                                />
                               </div>
-                              <select
-                                className={styles.the_select}
-                                value={updateSelectedOption} // explicitly set the value
-                                onChange={(e) => {
-                                  const newValue = e.target.value;
-                                  updateExistingCategoryArray(
-                                    question._id,
-                                    newValue,
-                                    "add"
-                                  );
-                                  setUpdateSelectedOption(""); // reset the selected option
-                                }}
-                              >
-                                <option value="" disabled>
-                                  Select your option
-                                </option>
-                                {allCategories
-                                  .filter(
-                                    (cat) => !question.categories.includes(cat)
-                                  )
-                                  .map((cat, index) => (
-                                    <option key={index} value={cat}>
+                              <div>
+                                <label className={styles.the_label}>
+                                  Description
+                                </label>
+                                <textarea
+                                  className={styles.text_area}
+                                  ref={descriptionRef}
+                                  defaultValue={question.description}
+                                ></textarea>
+                              </div>
+                              <div>
+                                <label className={styles.the_label}>
+                                  Category
+                                </label>
+                                <div>
+                                  {question.categories.map((cat, index) => (
+                                    <span key={index}>
                                       {cat}
-                                    </option>
+                                      <button
+                                        className={styles.category_button}
+                                        onClick={() =>
+                                          updateExistingCategoryArray(
+                                            question._id,
+                                            cat,
+                                            "remove"
+                                          )
+                                        }
+                                      >
+                                        X
+                                      </button>
+                                    </span>
                                   ))}
-                              </select>
-                              {/* <input ref={categoryRef} type="text" defaultValue={question.category} /> */}
-                            </div>
-                            <div>
-                              <label className={styles.the_label}>
-                                Complexity
-                              </label>
-                              <select
-                                className={styles.the_select}
-                                ref={complexityRef}
-                                defaultValue={question.complexity}
-                              >
-                                <option value="Easy">Easy</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Hard">Hard</option>
-                              </select>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <button
-                            className={styles.action_button}
-                            onClick={() => setUpdatingQuestionId(null)}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className={styles.action_button}
-                            onClick={() => {
-                              const updatedTitle =
-                                titleRef.current?.value || "";
-                              // const updatedCategory = categoryRef.current?.value || "";
-                              const updatedComplexity = complexityRef.current
-                                ?.value as "Easy" | "Medium" | "Hard"; // type assertion
-                              const updatedDescription =
-                                descriptionRef.current?.value || ""; // New line
-                              const updatedQuestion = {
-                                _id: question._id,
-                                title: updatedTitle,
-                                categories: question.categories, // already updated in-place
-                                complexity: updatedComplexity,
-                                description: updatedDescription, // New field
-                              };
-                              handleUpdateQuestion(
-                                updatedQuestion,
-                                question._id
-                              );
-                              setUpdatingQuestionId(null);
-                            }}
-                          >
-                            Save
-                          </button>
-                        </td>
-                      </tr>
-                    ) : (
-                      <tr>
-                        <td>
-                          <button
-                            className={styles.category_button}
-                            onClick={() => toggleQuestionDetails(question._id)}
-                          >
-                            {question.title}
-                          </button>
-                        </td>
-                        <td className={styles.center_align_cell}>
-                          {question.categories.join(", ")}
-                        </td>
-                        <td className={styles.center_align_cell}>
-                          {question.complexity}
-                        </td>
-                        <td>
-                          {/* Render Actions conditionally for non-basic users */}
-                          {currentUser &&
-                            Object.keys(currentUser).length != 0 &&
-                            currentUser.username && (
-                              <>
-                                <button
-                                  className={styles.action_button}
-                                  onClick={() =>
-                                    handleDeleteQuestion(question._id)
-                                  }
+                                </div>
+                                <select
+                                  className={styles.the_select}
+                                  value={updateSelectedOption} // explicitly set the value
+                                  onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    updateExistingCategoryArray(
+                                      question._id,
+                                      newValue,
+                                      "add"
+                                    );
+                                    setUpdateSelectedOption(""); // reset the selected option
+                                  }}
                                 >
-                                  Delete
-                                </button>
-                                <button
-                                  className={styles.action_button}
-                                  onClick={() =>
-                                    setUpdatingQuestionId(question._id)
-                                  }
+                                  <option value="" disabled>
+                                    Select your option
+                                  </option>
+                                  {allCategories
+                                    .filter(
+                                      (cat) => !question.categories.includes(cat)
+                                    )
+                                    .map((cat, index) => (
+                                      <option key={index} value={cat}>
+                                        {cat}
+                                      </option>
+                                    ))}
+                                </select>
+                                {/* <input ref={categoryRef} type="text" defaultValue={question.category} /> */}
+                              </div>
+                              <div>
+                                <label className={styles.the_label}>
+                                  Complexity
+                                </label>
+                                <select
+                                  className={styles.the_select}
+                                  ref={complexityRef}
+                                  defaultValue={question.complexity}
                                 >
-                                  Update
-                                </button>
-                              </>
-                            )}
-                        </td>
-                      </tr>
-                    )}
-                    {expandedQuestionId === question._id && (
-                      <tr>
-                        <td colSpan={4}>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: question.description,
-                            }}
-                          ></div>
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
+                                  <option value="Easy">Easy</option>
+                                  <option value="Medium">Medium</option>
+                                  <option value="Hard">Hard</option>
+                                </select>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <button
+                              className={styles.action_button}
+                              onClick={() => setUpdatingQuestionId(null)}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className={styles.action_button}
+                              onClick={() => {
+                                const updatedTitle =
+                                  titleRef.current?.value || "";
+                                // const updatedCategory = categoryRef.current?.value || "";
+                                const updatedComplexity = complexityRef.current
+                                  ?.value as "Easy" | "Medium" | "Hard"; // type assertion
+                                const updatedDescription =
+                                  descriptionRef.current?.value || ""; // New line
+                                const updatedQuestion = {
+                                  _id: question._id,
+                                  title: updatedTitle,
+                                  categories: question.categories, // already updated in-place
+                                  complexity: updatedComplexity,
+                                  description: updatedDescription, // New field
+                                };
+                                handleUpdateQuestion(
+                                  updatedQuestion,
+                                  question._id
+                                );
+                                setUpdatingQuestionId(null);
+                              }}
+                            >
+                              Save
+                            </button>
+                          </td>
+                        </tr>
+                      ) : (
+                        <tr>
+                          <td>
+                            <button
+                              className={styles.category_button}
+                              onClick={() => toggleQuestionDetails(question._id)}
+                            >
+                              {question.title}
+                            </button>
+                          </td>
+                          <td className={styles.center_align_cell}>
+                            {question.categories.join(", ")}
+                          </td>
+                          <td className={styles.center_align_cell}>
+                            {question.complexity}
+                          </td>
+                          <td>
+                            {/* Render Actions conditionally for non-basic users */}
+                            {currentUser &&
+                              Object.keys(currentUser).length != 0 &&
+                              currentUser.username && (
+                                <>
+                                  <button
+                                    className={styles.action_button}
+                                    onClick={() =>
+                                      handleDeleteQuestion(question._id)
+                                    }
+                                  >
+                                    Delete
+                                  </button>
+                                  <button
+                                    className={styles.action_button}
+                                    onClick={() =>
+                                      setUpdatingQuestionId(question._id)
+                                    }
+                                  >
+                                    Update
+                                  </button>
+                                </>
+                              )}
+                          </td>
+                        </tr>
+                      )}
+                      {expandedQuestionId === question._id && (
+                        <tr>
+                          <td colSpan={4}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: question.description,
+                              }}
+                            ></div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            </>
           )}
           {/* Render AddQuestionForm conditionally */}
           {currentUser &&
