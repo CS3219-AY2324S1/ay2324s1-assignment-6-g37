@@ -9,10 +9,10 @@ import { fetchRepoQuestions } from "./fetchRepoQuestions";
  * @param question Question to save.
  * @returns The response of the post or put request from posting the question to the questions repository.
  */
-export async function saveRepoQuestion(question: Question) {
+export async function saveRepoQuestion(question: Question, host: String ='127.0.0.1') {
   const existingQuestions = await fetchRepoQuestions(question.title);
   if (existingQuestions.length > 0) {
-    const url = `http://127.0.0.1:3001/api/questions/${existingQuestions[0]._id}`;
+    const url = `http://${host}:3001/api/questions/${existingQuestions[0]._id}`;
     return axios.put(url, question);
   }
   const url = "http://127.0.0.1:3001/api/questions";

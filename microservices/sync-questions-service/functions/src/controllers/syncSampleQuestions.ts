@@ -20,7 +20,8 @@ export const syncSampleQuestions = onRequest(async (request, response) => {
           return;
         }
         const question = formatQuestion(leetcodeQuestion);
-        await saveRepoQuestion(question);
+        const host = request.body.questionsServiceUrl;
+        await saveRepoQuestion(question, host);
       }));
       response.end();
     } catch (error) {
