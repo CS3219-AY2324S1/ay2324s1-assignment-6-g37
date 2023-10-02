@@ -18,6 +18,8 @@ export async function fetchLeetcodeQuestion(titleSlug: string) {
       }
     }
   }
+
+  console.log('fetching leetcode question');
   return axios
       .get(url, options)
       .then(response => extractLeetcodeQuestion(

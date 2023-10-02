@@ -1,4 +1,5 @@
 import createError from "http-errors";
+import cors from "cors";
 import dotenv from  "dotenv";
 import express, { Express, Request, Response } from 'express';
 import http from "http";
@@ -43,6 +44,7 @@ function initialiseExpressApp(port: string | number | false) {
   const app: Express = express();
   app.set('port', port);
 
+  app.use(cors());
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));

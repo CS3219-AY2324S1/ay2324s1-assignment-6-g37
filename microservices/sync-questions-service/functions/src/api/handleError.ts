@@ -20,12 +20,12 @@ export function handleError(error: any, response: Response<any>) {
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
     console.log('-----Error ocurred in request-----')
-    console.log(error.request);
+    //console.log(error.request);
   } else {
     // Something happened in setting up the request that triggered an Error
     console.log('-----Error ocurred in server-----')
     console.log('Error', error.message);
   }
-  console.log(error.config);
+  //console.log(error.config);
   response.sendStatus(CODE_INTERNAL_SERVER_ERROR);
 }

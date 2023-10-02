@@ -9,14 +9,15 @@ import { isArrayOfType } from "../utility";
  * @param questionTitle Title of the question to fetch.
  * @returns The question if exists, null otherwise.
  */
-export async function fetchRepoQuestions(questionTitle: string) {
-  const url = "http://127.0.0.1:3001/api/questions";
+export async function fetchRepoQuestions(questionTitle: string, host: String ='127.0.0.1') {
+  const url = `http://${host}:3001/api/questions`;
   const data: Partial<Question> = {
     title: questionTitle
   };
   const config = {
     data: data
   };
+  console.log('checking for existing question');
   const response = await axios.get(url, config);
   const questions = response.data;
   if (isArrayOfType<WithId<Question>>(questions, isQuestionWithId)) {

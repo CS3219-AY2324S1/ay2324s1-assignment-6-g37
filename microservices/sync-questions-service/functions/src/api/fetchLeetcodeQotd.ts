@@ -14,6 +14,7 @@ export async function fetchLeetcodeQotd() {
       query: graphQlQuery
     }
   }
+  console.log('fetching leetcode QOTD');
   return axios
       .get(url, options)
       .then(response => extractLeetcodeQuestion(

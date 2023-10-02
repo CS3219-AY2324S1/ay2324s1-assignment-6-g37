@@ -177,7 +177,7 @@ const QuestionBank: React.FC = () => {
             </div>
           ) : (
             <>
-              <SyncButtonsBar />
+              <SyncButtonsBar onSync={fetchQuestions}/>
               <table className={styles.table_container}>
                 <thead>
                   <tr>

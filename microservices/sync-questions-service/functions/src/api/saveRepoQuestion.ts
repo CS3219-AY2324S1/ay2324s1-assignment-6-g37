@@ -13,8 +13,10 @@ export async function saveRepoQuestion(question: Question, host: String ='127.0.
   const existingQuestions = await fetchRepoQuestions(question.title);
   if (existingQuestions.length > 0) {
     const url = `http://${host}:3001/api/questions/${existingQuestions[0]._id}`;
+    console.log('Updating existing question:', question.title);
     return axios.put(url, question);
   }
-  const url = "http://127.0.0.1:3001/api/questions";
+  const url = `http://${host}:3001/api/questions`;
+  console.log('Adding new question:', question.title);
   return axios.post(url, question);
 }

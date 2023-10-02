@@ -3,6 +3,9 @@
   margin: auto;
   margin-top: 16px;
   margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 }
 
 .action_button {

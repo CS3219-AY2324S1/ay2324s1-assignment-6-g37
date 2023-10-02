@@ -2,13 +2,28 @@ import SyncQotdButton from "./SyncQotdButton";
 import SyncSampleQuestionsButton from "./SyncSampleQuestionsButton";
 
 import styles from "./Button.module.css";
+import { useState } from "react";
 
-const SyncButtonsBar = () => {
+type SyncButtonsBarProps = {
+  onSync: () => void
+}
+
+const SyncButtonsBar = ({onSync}: SyncButtonsBarProps) => {
+  const [messageToUser, setMessageToUser] = useState('');
 
   return (
     <div className={styles.button_container}>
-      <SyncQotdButton />                
-      <SyncSampleQuestionsButton />
+      <div>
+        <SyncQotdButton
+          setMessageToUser={setMessageToUser}
+          onSync={onSync}
+        />                
+        <SyncSampleQuestionsButton
+          setMessageToUser={setMessageToUser}
+          onSync={onSync}
+        />
+      </div>
+      { messageToUser }
     </div>
   );
 }

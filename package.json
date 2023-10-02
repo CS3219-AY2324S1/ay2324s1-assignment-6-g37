@@ -16,7 +16,7 @@
     "dev:sync-questions-service": "cd microservices/sync-questions-service/functions && npm run dev",
     "dev:auth-service": "cd microservices/auth && npm run dev",
     "dev:front-end-service": "cd microservices/front-end && npm run dev",
-    "dev:all": "npm-run-all --parallel dev:user-service dev:questions-service dev:sync-questions-service dev:auth-service dev:front-end-service"
+    "dev:all": "npm-run-all --parallel dev:user-service dev:questions-service dev:auth-service dev:front-end-service"
   },
   "author": "",
   "license": "ISC",

@@ -1,4 +1,4 @@
-import { onRequest } from "firebase-functions/v1/https";
+import { onRequest } from "firebase-functions/v2/https";
 import { formatQuestion, handleError, saveRepoQuestion, } from "../api";
 import { fetchLeetcodeQuestion } from "../api/fetchLeetcodeQuestion";
 
@@ -6,7 +6,9 @@ import { fetchLeetcodeQuestion } from "../api/fetchLeetcodeQuestion";
  * Syncs the question repository with leetcode's Question of the Day.
  * Updates the existing question if it exists, and adds it to the repo otherwise.
  */
-export const syncSampleQuestions = onRequest(async (request, response) => {
+export const syncSampleQuestions = onRequest(
+  { cors: true },
+  async (request, response) => {
   const titleSlugs = [
     'reverse-string', 'linked-list-cycle', 'roman-to-integer', 'add-binary', 'fibonacci-number',
     'implement-stack-using-queues', 'combine-two-tables', 'repeated-dna-sequences', 'course-schedule', 'lru-cache',
