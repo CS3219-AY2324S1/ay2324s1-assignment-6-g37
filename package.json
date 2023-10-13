@@ -4,23 +4,23 @@
   "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/UxpU_KWG) # ServerlessTemplate",
   "main": "index.js",
   "scripts": {
-    "build:user-service": "cd microservices/user-service && npm install",
-    "build:questions-service": "cd microservices/questions-repo && npm install",
-    "build:sync-questions-service": "cd microservices/sync-questions-service && npm install && cd functions && npm install",
-    "build:auth-service": "cd microservices/auth && npm install",
-    "build:front-end-service": "cd microservices/front-end && npm install",
-    "build:all": "npm-run-all build:user-service build:questions-service build:sync-questions-service build:auth-service build:front-end-service",
-    
+    "install:front-end": "cd microservices/front-end && npm install",
+    "install:auth": "cd microservices/auth && npm install",
+    "install:user-service": "cd microservices/user-service && npm install",
+    "install:questions-service": "cd microservices/questions-service && npm install",
+    "install:sync-questions-service": "cd microservices/sync-questions-service/functions && npm install",
+    "install-all": "concurrently -c \"auto\" \"npm:install:*\"",
+
+    "dev:front-end": "cd microservices/front-end && npm run dev",
+    "dev:auth": "cd microservices/auth && npm run dev",
     "dev:user-service": "cd microservices/user-service && npm run start",
-    "dev:questions-service": "cd microservices/questions-repo && npm run serverstart",
+    "dev:questions-service": "cd microservices/questions-service && npm run dev",
     "dev:sync-questions-service": "cd microservices/sync-questions-service/functions && npm run dev",
-    "dev:auth-service": "cd microservices/auth && npm run dev",
-    "dev:front-end-service": "cd microservices/front-end && npm run dev",
-    "dev:all": "npm-run-all --parallel dev:user-service dev:questions-service dev:auth-service dev:front-end-service"
+    "dev-all": "concurrently -c \"auto\" \"npm:dev:*\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
+    "concurrently": "^8.2.1"
   }
 }
