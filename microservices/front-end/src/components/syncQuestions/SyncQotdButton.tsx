@@ -13,7 +13,7 @@ const SyncQotdButton = ({
   onSync
 }: SyncButtonProps) => {
   const syncQotd = async () => {
-    setMessageToUser('');
+    setMessageToUser('Syncing QOTD...');
     try {
       const response = await axios.post(
         cloudFunctionUrl,

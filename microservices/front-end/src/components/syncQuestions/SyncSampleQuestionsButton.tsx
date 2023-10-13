@@ -12,8 +12,8 @@ const SyncSampleQuestionsButton = ({
   setMessageToUser,
   onSync
 }: SyncButtonProps) => {
-  const syncQotd = async () => {
-    setMessageToUser('');
+  const syncSampleQuestions = async () => {
+    setMessageToUser('Syncing sample questions...');
     try {
       const response = await axios.post(
         cloudFunctionUrl,
@@ -35,7 +35,7 @@ const SyncSampleQuestionsButton = ({
   return (
     <button
       className={styles.action_button}
-      onClick={syncQotd}
+      onClick={syncSampleQuestions}
     >
       Sync Sample Questions
     </button>        
