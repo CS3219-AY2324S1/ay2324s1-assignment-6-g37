@@ -5,17 +5,11 @@ This directory sets up serverless functions to sync samples questions and questi
 ### Set Up
 Clone the repository, and install dependencies.
 ```
-cd ./microservices/sync-questions-service
+cd ay2324s1-assignment-6-g37/microservices/sync-questions-service/functions
 npm install
 ```
 
-Set up local emulator
-```
-cd functions
-npm install
-```
-
-Start the dev server.
+Run firebase emulator to emulate firebase cloud functions
 ```
 npm run dev
 ```
