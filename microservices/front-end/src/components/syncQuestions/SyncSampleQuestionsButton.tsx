@@ -3,23 +3,19 @@ import styles from "./Button.module.css";
 import { SyncButtonProps } from "./types";
 
 const MSG_QUESTIONS_SYNCED = "Sample questions synced successfully!";
-const MSG_SYNC_ERROR = "An unknown error occured while syncing, please try again later!";
-
-const cloudFunctionUrl = "http://127.0.0.1:5001/peerprep-1c8b3/us-central1/syncSampleQuestions";
-const questionsServiceUrl = "127.0.0.1";
+const MSG_SYNC_ERROR =
+  "An unknown error occurred while syncing, please try again later!";
 
 const SyncSampleQuestionsButton = ({
   setMessageToUser,
-  onSync
+  onSync,
 }: SyncButtonProps) => {
   const syncSampleQuestions = async () => {
-    setMessageToUser('Syncing sample questions...');
+    setMessageToUser("Syncing sample questions...");
     try {
       const response = await axios.post(
-        cloudFunctionUrl,
-        {
-            questionsServiceUrl
-        }
+        "/peerprep-1c8b3/us-central1/syncSampleQuestions",
+        {}
       );
 
       if (response.status === 200) {
@@ -27,19 +23,16 @@ const SyncSampleQuestionsButton = ({
         onSync();
       }
     } catch (error: unknown) {
-        setMessageToUser(MSG_SYNC_ERROR);
-        console.error("sync sample questions error:", error);
+      setMessageToUser(MSG_SYNC_ERROR);
+      console.error("sync sample questions error:", error);
     }
-  }
+  };
 
   return (
-    <button
-      className={styles.action_button}
-      onClick={syncSampleQuestions}
-    >
+    <button className={styles.action_button} onClick={syncSampleQuestions}>
       Sync Sample Questions
-    </button>        
+    </button>
   );
-}
+};
 
 export default SyncSampleQuestionsButton;

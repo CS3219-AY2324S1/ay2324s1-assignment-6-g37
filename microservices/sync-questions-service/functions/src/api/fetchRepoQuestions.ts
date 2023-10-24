@@ -9,8 +9,8 @@ import { isArrayOfType } from "../utility";
  * @param questionTitle Title of the question to fetch.
  * @returns The question if exists, null otherwise.
  */
-export async function fetchRepoQuestions(questionTitle: string, host: String ='127.0.0.1') {
-  const url = `http://${host}:3001/api/questions`;
+export async function fetchRepoQuestions(questionTitle: string, questionServiceUrl: string ) {
+  const url = `${questionServiceUrl}/api/questions`;
   const data: Partial<Question> = {
     title: questionTitle
   };
