@@ -13,5 +13,22 @@
         "npm --prefix \"$RESOURCE_DIR\" run build"
       ]
     }
-  ]
+  ],
+  "emulators": {
+    "functions": {
+      "host": "0.0.0.0"
+    },
+    "hub": {
+      "host": "0.0.0.0"
+    },
+    "ui": {
+      "host": "0.0.0.0"
+    },
+    "logging": {
+      "host": "0.0.0.0"
+    },
+    "eventarc": {
+      "host": "0.0.0.0"
+    }
+  }
 }
