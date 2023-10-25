@@ -22,8 +22,7 @@ export const syncSampleQuestions = onRequest(
           return;
         }
         const question = formatQuestion(leetcodeQuestion);
-        const host = request.body.questionServiceUrl;
-        await saveRepoQuestion(question, host);
+        await saveRepoQuestion(question);
       }));
       response.end();
     } catch (error) {
