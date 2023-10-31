@@ -16,8 +16,7 @@ export const syncQotd = onRequest(
         return;
       } 
       const question = formatQuestion(leetcodeQuestion);
-      const host = request.body.questionsServiceUrl;
-      await saveRepoQuestion(question, host);
+      await saveRepoQuestion(question);
       response.end();
     } catch (error) {
       handleError(error, response)

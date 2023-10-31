@@ -1,0 +1,16 @@
+FROM node:18
+
+# need to copy the `.firebaserc` and `firebase.json` files
+WORKDIR /sync-questions-server
+
+COPY . .
+
+WORKDIR /sync-questions-server/functions
+
+RUN npm install
+
+RUN npm run build
+
+EXPOSE 5001
+
+CMD [ "npm", "run", "dev" ]
